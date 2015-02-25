@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				".lock-waf_linux2_build",
+				"waf-1.8.5",
+				"waf"
+			],
+			"folder_exclude_patterns":
+			[
+				".waf-1.8.5-69c046f2063dbb528ecf1ab20607ba25",
+				"build"
+			],
+			"follow_symlinks": true,
+			"path": "."
+		}
+	]
+}

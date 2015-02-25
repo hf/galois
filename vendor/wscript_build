@@ -1,0 +1,4 @@
+#!/bin/env python
+
+bld(name='catch',
+  export_includes='catch')

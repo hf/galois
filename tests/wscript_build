@@ -1,0 +1,5 @@
+#!/bin/env python
+
+bld.program(target='test_field_rijndael',
+  source = bld.path.ant_glob('field/rijndael/**/*.cpp'),
+  use = ['catch', 'galois'])

@@ -1,0 +1,5 @@
+#!/bin/env python
+
+conf.load('compiler_cxx')
+
+conf.recurse('vendor galois tests')
