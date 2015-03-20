@@ -1,5 +1,4 @@
 #!/bin/env python
 
-bld.shlib(target='galois',
-  export_includes='.',
-  source=bld.path.ant_glob('**/*.cpp'))
+bld(target='galois',
+  export_includes='.')

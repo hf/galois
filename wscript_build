@@ -1,3 +1,0 @@
-#!/bin/env python
-
-bld.recurse('vendor galois tests')

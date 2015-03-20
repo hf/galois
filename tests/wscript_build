@@ -1,5 +1,7 @@
 #!/bin/env python
 
+bld.recurse('vendor')
+
 bld.program(target='test_field_rijndael',
   source = bld.path.ant_glob('field/rijndael/**/*.cpp'),
   use = ['catch', 'galois'])

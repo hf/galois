@@ -59,8 +59,8 @@ public:
   }
 
   inline char* Mul(const char* const ia, const char* const ib, char* const out) const {
-    unsigned char a = (char) *ia;
-    unsigned char b = (char) *ib;
+    unsigned char a = *ia;
+    unsigned char b = *ib;
     unsigned char p = 0;
     unsigned char carry = 0;
 
