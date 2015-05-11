@@ -89,7 +89,7 @@ public:
 const size_t Rijndael::ORDER = 256;
 const size_t Rijndael::WIDTH = 1;
 
-const unsigned char Rijndael::IRREDUCIBLE = 0x11B;
+const unsigned char Rijndael::IRREDUCIBLE = 0x1B;
 
 const unsigned char Rijndael::CARRY_SUBTRACT[] = { 0, Rijndael::IRREDUCIBLE };
 
