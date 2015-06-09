@@ -1,67 +1,54 @@
 # Galois
 
-This is a small, header-only C++ library that features various
-[Galois field](http://en.wikipedia.org/wiki/Finite_field) implementations.
+This is a tiny, header only C / OpenCL library for dealing with
+[Galois fields](http://en.wikipedia.org/wiki/Finite_field).
 
-## Field Definition
+It was mainly developed for a cryptography project in OpenCL, but since it does
+not use OpenCL specifics it can be used in-place for any C99 implementation.
 
-This library tries to be as minimal as possible. It does *not* use fancy
-features like polymorphism, C++11, etc. (Templates are OK.)
+It supports `GF(2^n)` fields where `n` is a non-zero multiple of 8.
 
-Here is an outline for a minimal field implementation. All of the parameters
-**must** be included. Everything else is optional.
+For full performance it requires a loop-unrolling compiler (such as GCC or an
+LLVM based compiler).
 
-```c++
-class FieldName {
-public:
-  // width of argument data (in bytes)
-  static const size_t WIDTH;
+Most of the 'functions' are essentially macros. (This is so it can work with
+any arguments of the disjoint memory spaces in OpenCL.)
 
-  // order (number of elements in field)
-  static const size_t ORDER;
+It does not use any caching techniques such as logarithm tables or tables of
+inverses.
 
-  FieldName() { /* no-op. */ }
-  ~FieldName() { /* no-op. */ }
+It uses big-endian ordering.
 
-  // comparator
-  // returns a value greater than 0 if value at a > value at b
-  // returns a value less than 0    if value at a < value at b
-  // returns 0                      if value at a == value at b
-  inline int Compare(const char* const a, const char* const b) const;
+## Usage
 
-  // setter
-  // places value into out
-  // TYPE is an appropriate type that can hold ORDER values. it is left
-  // unspecified
-  // returns out
-  inline char* const
-  Value(TYPE value, char* const out) const;
+Code is in the file `finite_fields.cl`.
 
-  // addition
-  // adds value at a with value at b and places it into out
-  // returns out
-  inline char* const
-  Add(const char* const a, const char* const b, char* const out) const;
+Include it in your OpenCL sources or your C99-compatible program. The macro
+`ffwidth` should be defined to the number of bytes in the field.
 
-  // subtraction
-  // subtracts value at a with value at b and places it into out
-  // returns out
-  inline char* const
-  Sub(const char* const a, const char* const b, char* const out) const;
+```c
+uchar a[ffwidth];
+uchar b[ffwidth];
+uchar result[ffwidth];
+uchar irreducible_polynomial[ffwidth];
 
-  // multiplication
-  // multiplies value at a with value at b and places it into out
-  // returns out
-  inline char* const
-  Mul(const char* const a, const char* const b, char* const out) const;
-
-  // division
-  // divides value at a with value at b (b != 0) and places it into out
-  // returns out
-  inline char* const
-  Div(const char* const a, const char* const b, char* const out) const;
-};
+FiniteFieldAdd(a, b, result);
+FiniteFieldMultiply(a, b, result, irreducible_polynomial);
+FiniteFieldMultiplicativeInverse(a, result, irreducible_polynomial);
 ```
+
+Pure C users may need to: `#define uchar unsigned char`.
+
+### Polynomials
+
+The Rijndael (AES) polynomial can be represented by `0x1B`.
+
+A 16-bit polynomial that is suitable is `0x3F 0x80`.
+
+## Tools
+
+Included inside the `tools` directory are some Ruby scripts that are helpful
+to develop finite field implementations.
 
 ## License
 

@@ -1,4 +1,0 @@
-#!/bin/env python
-
-bld(target='galois',
-  export_includes='.')
